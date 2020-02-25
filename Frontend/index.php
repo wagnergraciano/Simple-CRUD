@@ -63,7 +63,7 @@
             <!-- Saída de informações -->
                   <form  class="input-group mb-2">
                     <input type="text" required class="form-control" placeholder="Clientes cadastrados">
-                    <button type="button" class="btn btn-primary">Pesquisar <i class="fa fa-search"></i></button>
+                    <button type="submit" class="btn btn-primary">Pesquisar <i class="fa fa-search"></i></button>
                   </form>
 
                   <!-- Cards -->
