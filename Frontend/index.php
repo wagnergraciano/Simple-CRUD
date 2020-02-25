@@ -14,14 +14,14 @@
 </head>
 <body>
 <div class="container-fluid">
-  <div class="row mt-5">
+  <div class="row mt-2">
     <div class="col-0 col-md-2"></div>
 
     <div class="col-12 col-md-8">
-            <div class="font-weight-bold text-white rounded-top p-2" style="background-color: #465777;">
+            <div class="row font-weight-bold text-white rounded-top p-2" style="background-color: #465777;">
               <!-- Header/ cadastro -->
-              <div class="row">
-                  <div class="col-6 pr-3 pt-2">
+
+                  <div class="col-6 pr-6 pt-2">
                       <span>CRUD Simples</span>
                   </div>
                   <div class="col-6">
@@ -32,7 +32,6 @@
                       </button>
                       </form>
                   </div>
-              </div>
 
               <!-- Modal -->
               <div class="modal fade text-dark" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -65,21 +64,32 @@
 
 
             
-            <div class="card-group p-2" style="background-color: rgb(234,234,234);">
+            <div class="row justify-content-center p-2" style="background-color: rgb(234,234,234);">
             <!-- Saída de informações -->
-                  <form  class="input-group mb-2">
+                  <form  class="input-group mb-2 mx-3">
                     <input type="text" required class="form-control" placeholder="Clientes cadastrados">
                     <button type="submit" class="btn btn-primary">Pesquisar <i class="fa fa-search"></i></button>
                   </form>
 
                   <!-- Cards -->
-                  <div class="card" style="width: 18rem;">
+                  <?php
+                  include_once("../Backend/dao/pessoaDAO.class.php");
+                  include_once("../Backend/classes/pessoa.class.php");
+                  $pessoaDAO = new PessoaDAO();
+                  $arrayTodos = $pessoaDAO->retornarTodos();
+                  foreach($arrayTodos as $linha){
+                  $pessoa = new Pessoa($linha['NOME'],$linha['DATA_NASC'],$linha['DATA_GRAV'])
+?>
+                    <div class="card mx-2 mb-2" style="min-width: 17rem;">
                     <div class="card-body">
-                      <h5><i class="fa fa-trash float-right text-danger"></i></h5>
-                      <h5 class="card-title">EU</h5>
-                      <h6 class="card-subtitle mb-2 text-muted">Nome</h6>
-                      <h6 class="card-subtitle mb-2 text-muted">Idade</h6>
-                      <p class="card-text">Data/Hora cadastrado</p>
+                    <form action="../Backend/deletar.php" id="deleteForm" method="get">
+                      <input type="hidden" id="c_id" name="c_id" value="<?php echo $linha['ID']  ?>">
+                      <h5><button type="submit" style="display:none;"><i class="fa fa-trash float-right text-danger"></i></button></h5>
+                    </form>
+                      <h5 class="card-title"><?php echo $linha['ID'] ?></h5>
+                      <h6 class="card-subtitle mb-2 text-muted"><?php echo $pessoa->getNome() ?></h6>
+                      <h6 class="card-subtitle mb-2 text-muted"><?php echo $pessoa->getIdade()." anos" ?></h6>
+                      <p class="card-text">Data/Hora cadastro:<br/> <?php echo $pessoa->getDataGrav() ?></p>
 
                       <form>
                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
@@ -109,30 +119,12 @@
                       </div>
                     </div>
                   </div>
+<?php
+                  }
+?>
                   
-                  <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                    <div class="float-right">
-                    </div>
-                    <h5 class="card-title">EUEU</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Nome</h6>
-                      <h6 class="card-subtitle mb-2 text-muted">Idade</h6>
-                      <p class="card-text">Data/Hora cadastrado</p>
-                      <button type="button" class="btn btn-primary mr-3">Alterar</button>
-                      <button type="button" class="btn btn-danger mr-3">Deletar</button>
-                    </div>
+                  
                   </div>
-
-                    <div class="card" style="width: 18rem;">
-                      <div class="card-body">
-                      <h5 class="card-title">EUEUEU</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Nome</h6>
-                      <h6 class="card-subtitle mb-2 text-muted">Idade</h6>
-                      <p class="card-text">Data/Hora cadastrado</p>
-                      <button type="button" class="btn btn-primary mr-3">Alterar</button>
-                      <button type="button" class="btn btn-danger mr-3">Deletar</button>
-                      </div>
-                    </div>
             </div>
     </div>
     <div class="col-0 col-md-2"></div>

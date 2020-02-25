@@ -9,7 +9,7 @@ class Pessoa {
         $this->setNome($nome);
         $this->setDataNasc($data_nasc);
         $this->setDataGrav($data_grav);
-      }
+    }
 
     public function getId() {
         return $this->id;
