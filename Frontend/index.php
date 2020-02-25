@@ -27,18 +27,18 @@
                   <div class="col-6">
                       <!-- Button trigger modal -->
                       <form class="float-right">
-                      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCadastro">
                         Cadastrar <i class="fa fa-user-plus"></i>
                       </button>
                       </form>
                   </div>
 
               <!-- Modal -->
-              <div class="modal fade text-dark" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal fade text-dark" id="modalCadastro" tabindex="-1" role="dialog" aria-labelledby="modalCadastroLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Cadastrar pessoa</h5>
+                      <h5 class="modal-title" id="modalCadastroLabel">Cadastrar pessoa</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -47,7 +47,7 @@
                             <form class="px-4 py-3" action="../Backend/cadastrar.php" method="get">
                               <div class="form-group">
                                 <label for="exampleDropdownFormEmail1">Nome</label>
-                                <input type="name" required class="form-control" id="nome" name="c_nome" placeholder="José da Silva">
+                                <input type="name" required class="form-control" id="nome" name="c_nome" placeholder="Ex: José da Silva">
                               </div>
                               <div class="form-group">
                                 <label for="exampleDropdownFormPassword1">Data de nascimento</label>
@@ -64,13 +64,13 @@
 
 
             
-            <div class="row justify-content-center p-2" style="background-color: rgb(234,234,234);">
+            <div class="row p-2" style="background-color: rgb(234,234,234);">
             <!-- Saída de informações -->
                   <form  class="input-group mb-2 mx-3">
                     <input type="text" required class="form-control" placeholder="Clientes cadastrados">
                     <button type="submit" class="btn btn-primary">Pesquisar <i class="fa fa-search"></i></button>
                   </form>
-
+                  <div class="row mx-2">
                   <!-- Cards -->
                   <?php
                   include_once("../Backend/dao/pessoaDAO.class.php");
@@ -80,51 +80,69 @@
                   foreach($arrayTodos as $linha){
                   $pessoa = new Pessoa($linha['NOME'],$linha['DATA_NASC'],$linha['DATA_GRAV'])
 ?>
-                    <div class="card mx-2 mb-2" style="min-width: 17rem;">
-                    <div class="card-body">
-                    <form action="../Backend/deletar.php" id="deleteForm" method="get">
-                      <input type="hidden" id="c_id" name="c_id" value="<?php echo $linha['ID']  ?>">
-                      <h5><button type="submit" style="display:none;"><i class="fa fa-trash float-right text-danger"></i></button></h5>
-                    </form>
-                      <h5 class="card-title"><?php echo $linha['ID'] ?></h5>
-                      <h6 class="card-subtitle mb-2 text-muted"><?php echo $pessoa->getNome() ?></h6>
-                      <h6 class="card-subtitle mb-2 text-muted"><?php echo $pessoa->getIdade()." anos" ?></h6>
-                      <p class="card-text">Data/Hora cadastro:<br/> <?php echo $pessoa->getDataGrav() ?></p>
-
-                      <form>
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                      Alterar <i class="fa fa-pencil"></i>
-                      </button>
+                    <div class="card mx-2 mb-3" style="min-width: 17rem;">
+                      <div class="card-body">
+                      <form action="../Backend/deletar.php" id="deleteForm" method="get">
+                        <input type="hidden" id="c_id" name="c_id" value="<?php echo $linha['ID']  ?>">
+                        <h5><button type="submit" class="border-0 bg-white float-right"><i class="fa fa-trash float-right text-danger"></i></button></h5>
                       </form>
+                        <h5 class="card-title"><?php echo $linha['ID'] ?></h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><?php echo $pessoa->getNome() ?></h6>
+                        <h6 class="card-subtitle mb-2 text-muted"><?php echo $pessoa->getIdade()." anos" ?></h6>
+                        <p class="card-text">Data/Hora cadastro:<br/> <?php echo $pessoa->getDataGrav() ?></p>
 
-                      <!-- Modal -->
-                      <div class="modal fade text-dark" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              ...
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="button" class="btn btn-primary">Save changes</button>
+                        <form>
+                        <button onclick="preencherAlterar('<?php echo $linha['ID'] ?>','<?php echo $pessoa->getNome() ?>','<?php echo $pessoa->getDataNasc() ?>')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAlterar">
+                        Alterar <i class="fa fa-pencil"></i>
+                        </button>
+<script>
+function preencherAlterar(n_id,n_nome,n_dataNasc) {
+  var id = document.getElementById("c_id_alterar");
+  var nome = document.getElementById("c_nomeAlterar");
+  var dataNasc = document.getElementById("data_nascimentoAlterar");
+  id.value = n_id;
+  nome.value = n_nome;
+  dataNasc.value = n_dataNasc;
+}
+</script>
+                        </form>
+
+                          <!-- Modal -->
+                          <div class="modal fade text-dark" id="modalAlterar" tabindex="-1" role="dialog" aria-labelledby="modalAlterarLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="modalAlterarLabel">Alterar Pessoa</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <form class="px-4 py-3" action="../Backend/alterar.php" method="get">
+                                    <div class="form-group">
+                                      <label for="exampleDropdownFormEmail1">Nome</label>
+                                      <input type="name" required class="form-control" id="nomeAlterar" name="c_nome" placeholder="Ex: José da Silva">
+                                    </div>
+                                    <input type="hidden" id="c_id_alterar" name="c_id" value="">
+                                    <div class="form-group">
+                                      <label for="exampleDropdownFormPassword1">Data de nascimento</label>
+                                      <input type="date" required class="form-control" id="data_nascimentoAlterar" name="c_dataNasc">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Alterar</button>
+                                  </form>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
                       </div>
                     </div>
-                  </div>
 <?php
                   }
+
 ?>
                   
-                  
-                  </div>
+                </div>
+              </div>
             </div>
     </div>
     <div class="col-0 col-md-2"></div>
