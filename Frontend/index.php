@@ -39,17 +39,23 @@
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Cadastrar pessoa</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
                     <div class="modal-body">
-                      ...
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
+                            <form class="px-4 py-3" action="../Backend/cadastrar.php" method="get">
+                              <div class="form-group">
+                                <label for="exampleDropdownFormEmail1">Nome</label>
+                                <input type="name" required class="form-control" id="nome" name="c_nome" placeholder="José da Silva">
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleDropdownFormPassword1">Data de nascimento</label>
+                                <input type="date" required class="form-control" id="data nascimento" name="c_dataNasc">
+                              </div>
+                              <button type="submit" class="btn btn-primary">Cadastrar</button>
+                            </form>
                     </div>
                   </div>
                 </div>

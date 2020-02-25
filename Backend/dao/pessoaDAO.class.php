@@ -1,10 +1,10 @@
 <?php
 interface iPessoaDAO{
-    public function cadastrar($nome,$data_nasc,$data_grav);
+    public function cadastrar($pessoa);
 }
 
 class PessoaDAO implements iPessoaDAO{
-    public function cadastrar($nome,$data_nasc,$data_grav){
+    public function cadastrar($pessoa){
         // connect
         include_once("../Backend/dao/connectdb.class.php");
         try{
@@ -14,7 +14,7 @@ class PessoaDAO implements iPessoaDAO{
         //insert de user
         $sql = "INSERT INTO pessoa (NOME, DATA_NASC, DATA_GRAV) VALUES (?,?,?)";
         $stmt= $conn->prepare($sql);
-        $stmt->execute([$nome, $data_nasc, $data_grav]);
+        $stmt->execute([$pessoa->getNome(), $pessoa->getDataNasc(), $pessoa->getDataGrav()]);
         }
         catch(PDOException $e)
         {
